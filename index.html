@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beta White Board</title>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+    <header class="header">
+        <div>
+
+        </div class="header-left">
+          <a href="login.html" class="login-link">Login / Sign Up</a>
+        <div class="header-left">
+            <span class="status">Saved</span>
+            <button class="share-btn">Share</button>
+            <div class="avatar">U</div>
+        </div>          
+    </header>
+
+    <aside class="toolbar-main">
+        <button class="tool-btn" id="tool-move" onclick="setMainTool('move')" title="Move Tool">
+            <i data-lucide="mouse-pointer-2"></i>
+        </button>
+
+        <div class="tool-container">
+            <button class="tool-btn active" id="tool-draw" onclick="toggleDrawingPalette()" title="Drawing Tools">
+                <i data-lucide="pencil"></i>
+            </button>
+            
+            <div class="drawing-palette" id="drawingPalette">
+                <div class="sub-tool-group">
+                    <button class="sub-tool active" id="sub-pen" onclick="setDrawingSubTool('pen')" title="Pen">
+                        <i data-lucide="pen-tool"></i>
+                    </button>
+                    <button class="sub-tool" id="sub-highlighter" onclick="setDrawingSubTool('highlighter')" title="Highlighter">
+                        <i data-lucide="highlighter"></i>
+                    </button>
+                    <button class="sub-tool" id="sub-eraser" onclick="setDrawingSubTool('eraser')" title="Eraser">
+                        <i data-lucide="eraser"></i>
+                    </button>
+                </div>
+
+                <div class="size-section">
+                    <label>Size</label>
+                    <div class="size-controls">
+                        <input type="range" id="brush-size" min="1" max="50" value="3" oninput="updateBrushSize(this.value)">
+                        <span id="size-num">3</span>
+                    </div>
+                </div>
+
+                <div class="color-section">
+                    <label>Colors</label>
+                    <div class="color-swatches">
+                        <div class="swatch active" style="background: #333;" onclick="updateBrushColor('#333333', this)"></div>
+                        <div class="swatch" style="background: #ff5252;" onclick="updateBrushColor('#ff5252', this)"></div>
+                        <div class="swatch" style="background: #4262ff;" onclick="updateBrushColor('#4262ff', this)"></div>
+                        <div class="swatch" style="background: #4caf50;" onclick="updateBrushColor('#4caf50', this)"></div>
+                        <div class="swatch" style="background: #ffd600;" onclick="updateBrushColor('#ffd600', this)"></div>
+                        <div class="swatch" style="background: #a855f7;" onclick="updateBrushColor('#a855f7', this)"></div> <div class="swatch" style="background: #ec4899;" onclick="updateBrushColor('#ec4899', this)"></div> <div class="custom-color-wrapper">
+                            <input type="color" id="multi-color-picker" oninput="updateBrushColor(this.value, this.parentElement)" title="Choose Custom Color">
+                            <i data-lucide="plus" class="picker-icon"></i>
+                       
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tool-container">
+            <button class="tool-btn" id="tool-shape" onclick="toggleShapePalette()" title="Shapes">
+                <i data-lucide="shapes"></i>
+            </button>
+            <div class="shape-palette" id="shapePalette">
+                <div class="shape-grid">
+                    <div class="sub-shape-item" onclick="selectShape('rect')" title="Rectangle"><i data-lucide="square"></i></div>
+                    <div class="sub-shape-item" onclick="selectShape('circle')" title="Circle"><i data-lucide="circle"></i></div>
+                    <div class="sub-shape-item" onclick="selectShape('diamond')" title="Diamond"><i data-lucide="diamond"></i></div>
+                    <div class="sub-shape-item" onclick="selectShape('database')" title="Database"><i data-lucide="database"></i></div>
+                </div>
+            </div>
+        
+        <div>
+          <button class="tool-btn" id="tool-sticky" onclick="setMainTool('sticky')" title="Sticky Notes">
+            <i data-lucide="sticky-note"></i>
+          </button> 
+        </div>
+
+        <button class="tool-btn" id="tool-text" onclick="setMainTool('text')" title="Text">
+            <i data-lucide="type"></i>
+        </button>
+    </aside>
+
+    <aside class="toolbar-history">
+        <button class="tool-btn" onclick="undo()" title="Undo"><i data-lucide="undo"></i></button>
+        <button class="tool-btn" onclick="redo()" title="Redo"><i data-lucide="redo"></i></button>
+    </aside>
+
+    <div class="grid-background"></div>
+    <div id="objects-container"></div>
+    <canvas id="whiteboardCanvas"></canvas>
+
+    <div class="bottom-right-controls">
+        <div class="page-controls">
+            <button class="tool-btn" onclick="prevPage()"><i data-lucide="chevron-left"></i></button>
+            <span id="page-display">Page 1</span>
+            <button class="tool-btn" onclick="nextPage()"><i data-lucide="chevron-right"></i></button>
+            <button class="tool-btn" onclick="addNewPage()"><i data-lucide="plus"></i></button>
+        </div>
+
+        <div class="zoom-controls">
+            <button class="tool-btn" onclick="changeZoom(-0.1)"><i data-lucide="minus"></i></button>
+            <span id="zoom-display">100%</span>
+            <button class="tool-btn" onclick="changeZoom(0.1)"><i data-lucide="plus"></i></button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
